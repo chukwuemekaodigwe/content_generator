@@ -16,11 +16,11 @@
             </span>
         </div>
 
-        <project v-for="project, i in projects" :key="i" :item="project" />
+        <ProjectItem v-for="project, i in projects" :key="i" :item="project" />
     </div>
 </template>
 
 <script setup>
 import { projects } from '@/composables/data';
-import project from './project.vue';
+import ProjectItem from './ProjectItem.vue';
 </script>
