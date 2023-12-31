@@ -17,7 +17,6 @@
         <label class="font-medium capitalize block" for="keyword">Enter Keyword:</label>
         <input v-model="keyword" class="px-2 py-0 mb-5 w-full max-w-xl text-black dark:gray-100" type="text"
           id="keyword" />
-
       </p>
       <p>
         <label class="font-medium text-capitalize block" for="tone">Content Type:</label>
@@ -88,7 +87,8 @@ async function generateContent() {
     //   "https://audiospace-1-u9912847.deta.app/matagimage?id=gCRxn2REh2GcUe1TlZ7q1703987569.0152733",
     //   "https://audiospace-1-u9912847.deta.app/matagimage?id=OgjHmd7Y6K2ttsuknCaP1703987593.766965"
     // ]
-    displayContent(generatedText, images).finally(() => {
+    console.log({'image output': images})
+    displayContent(generatedText, images).then(() => {
       addImage(images)
     })
   } else {
@@ -125,7 +125,7 @@ async function callMidjourneyAPI(keyword) {
 }
 
 
-async function displayContent(text, images) {
+async function displayContent(text) {
 
   var converter = new showdown.Converter(),
     html = converter.makeHtml(text);

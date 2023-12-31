@@ -5,7 +5,7 @@ import OpenAI from "openai";
 
 export async function useGoogleGemini(prompt, densityMin, densityMax) {
     const API_KEY = import.meta.env.VITE_GOOGLE_API_KEY
-    
+
     const genAI = new GoogleGenerativeAI(API_KEY);
     let density = densityMax - densityMin
 
@@ -13,7 +13,7 @@ export async function useGoogleGemini(prompt, densityMin, densityMax) {
         // stopSequences: ["red"],
         //maxOutputTokens: 20,
         temperature: 0.9,
-        topP: (density/100),
+        topP: (density / 100),
         topK: 16,
     };
     const safetySettings = [
@@ -31,10 +31,10 @@ export async function useGoogleGemini(prompt, densityMin, densityMax) {
     let text = '';
     for await (const chunk of result.stream) {
         const chunkText = chunk.text();
-      //  console.log(chunkText);
+        //  console.log(chunkText);
         text += chunkText;
     }
-
+    console.log(text)
     return text
 }
 
@@ -64,9 +64,9 @@ export async function useGPT4(prompt, density = '') {
 }
 
 export async function useRapidAPI(prompt, density, density2) {
-     density = density2 - density 
-     const API_KEY = import.meta.env.VITE_RAPIDAPI_KEY
-     //console.log(API_KEY)
+    density = density2 - density
+    const API_KEY = import.meta.env.VITE_RAPIDAPI_KEY
+    //console.log(API_KEY)
     const options = {
         method: 'POST',
         url: 'https://chatgpt-42.p.rapidapi.com/conversationgpt4',
@@ -108,7 +108,7 @@ export async function useDalle3(prompt) {
     const API_KEY = import.meta.env.VITE_RAPIDAPI_KEY
     const options = {
         method: 'POST',
-        url:  'https://chatgpt-42.p.rapidapi.com/texttoimagetv',
+        url: 'https://chatgpt-42.p.rapidapi.com/texttoimagetv',
         headers: {
             'content-type': 'application/json',
             'X-RapidAPI-Key': API_KEY,
@@ -123,15 +123,12 @@ export async function useDalle3(prompt) {
             // style: 'vivid'
             text: prompt,
             size: '975*975'
-          }
+        }
     };
-
     try {
         const response = await axios.request(options);
-       // const response2 = await axios.request(options);
-       //console.log(response)
-    //return [response.data.generated_image, response2.data.generated_image]
-    return [response.data.generated_image]
+        console.log(response.data)
+        return [response.data.generated_image]
     } catch (error) {
 
         console.error(error);
